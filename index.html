@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#071510">
- 
+
 <!-- SEO -->
 <meta name="title" content="Snake Arena - Play Free Online Snake Game">
 <meta name="description" content="Enter Snake Arena! Play the classic snake game, beat your high score and challenge your friends. Free online gaming by Shivam Sharma.">
@@ -29,6 +28,11 @@
 <meta name="twitter:image" content="https://YOUR-DOMAIN.com/snake-arena-preview.jpg">
 
 <title>Snake Arena - Free Online Snake Game</title>
+
+<!-- Google AdSense -->
+<meta name="google-adsense-account" content="ca-pub-8266487631736473">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8266487631736473"
+     crossorigin="anonymous"></script>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
@@ -303,7 +307,7 @@ footer{
 
 footer strong{color:var(--green)}
 
-/* ACTUAL GAME-ONLY FULLSCREEN */
+/* GAME-ONLY FULLSCREEN */
 .game-layout:fullscreen{
  position:fixed;
  inset:0;
@@ -358,7 +362,7 @@ footer strong{color:var(--green)}
  margin-top:8px;
 }
 
-/* Fallback fullscreen if browser API is unavailable */
+/* Fallback fullscreen */
 .game-layout.fake-fullscreen{
  position:fixed;
  inset:0;
@@ -441,7 +445,6 @@ footer strong{color:var(--green)}
 
 <body>
 <div class="page" id="app">
-
 <header>
  <div class="logo">
   SNAKE ARENA
@@ -454,9 +457,7 @@ footer strong{color:var(--green)}
 </header>
 
 <main class="game-layout" id="gameLayout">
-
  <section class="game-panel">
-
   <div class="stats">
    <div class="stat"><span>Score</span><strong id="score">0</strong></div>
    <div class="stat"><span>Best</span><strong id="best">0</strong></div>
@@ -554,7 +555,6 @@ footer strong{color:var(--green)}
 const canvas = document.getElementById("game");
 const ctx = canvas.getContext("2d");
 const layout = document.getElementById("gameLayout");
-
 const $ = id => document.getElementById(id);
 
 const SIZE = 25;
@@ -802,7 +802,7 @@ function drawBackground(){
 
   ctx.beginPath();
   ctx.moveTo(0,i*CELL);
-  ctx.lineTo(canvas.width,i*CELL);
+  ctx.lineTo(i*CELL,canvas.height);
   ctx.stroke();
  }
 }
@@ -916,12 +916,10 @@ function loop(time){
  draw(time);
 }
 
-// Buttons
 $("mainBtn").addEventListener("click",startGame);
 $("restartBtn").addEventListener("click",restartGame);
 $("pauseBtn").addEventListener("click",pauseGame);
 
-// Keyboard controls
 document.addEventListener("keydown",e=>{
  const target=e.target;
  if(target && ["INPUT","TEXTAREA","SELECT"].includes(target.tagName)) return;
@@ -944,7 +942,6 @@ document.addEventListener("keydown",e=>{
  else if(key==="enter") startGame();
 });
 
-// Mobile directional controls
 document.querySelectorAll(".dpad button").forEach(button=>{
  button.addEventListener("pointerdown",e=>{
   e.preventDefault();
@@ -959,7 +956,6 @@ document.querySelectorAll(".dpad button").forEach(button=>{
  });
 });
 
-// Swipe controls
 let touchX=0,touchY=0;
 
 canvas.addEventListener("touchstart",e=>{
@@ -979,7 +975,6 @@ canvas.addEventListener("touchend",e=>{
  else setDirection(0,dy>0?1:-1);
 },{passive:true});
 
-// GAME-ONLY FULLSCREEN
 async function toggleFullscreen(){
  try{
   if(!document.fullscreenElement){
@@ -989,7 +984,6 @@ async function toggleFullscreen(){
    await document.exitFullscreen();
   }
  }catch(error){
-  // CSS fallback for browsers without Fullscreen API
   if(!document.fullscreenElement){
    layout.classList.toggle("fake-fullscreen");
    updateFullscreenButtons();
@@ -1026,14 +1020,12 @@ document.addEventListener("keydown",e=>{
  }
 });
 
-// Sound
 $("soundBtn").addEventListener("click",()=>{
  soundOn=!soundOn;
  $("soundBtn").textContent=soundOn?"🔊 Sound":"🔇 Sound Off";
  if(soundOn) beep(600);
 });
 
-// Settings
 $("mode").addEventListener("change",()=>{
  resetGame(false);
 });
@@ -1046,7 +1038,6 @@ $("skin").addEventListener("change",()=>{
  draw();
 });
 
-// Start
 resetGame(false);
 requestAnimationFrame(loop);
 
