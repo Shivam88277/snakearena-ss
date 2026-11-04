@@ -1,0 +1,556 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>Snake Arena - Free Online Snake Game | Shivam Sharma</title>
+
+<meta name="description" content="Play Snake Arena, a free online snake game by Shivam Sharma. Enjoy Wall Challenge, exciting levels, smooth animations, sound effects and mobile-friendly controls.">
+
+<meta name="keywords" content="Snake Arena, Free Online Snake Game, Snake Game, Wall Challenge, Mobile Snake Game, Arcade Game, Shivam Sharma">
+
+<meta name="author" content="Shivam Sharma">
+<meta name="creator" content="Shivam Sharma">
+<meta name="application-name" content="Snake Arena">
+<meta name="theme-color" content="#080d16">
+<meta name="robots" content="index,follow">
+
+<!-- Replace after purchasing your domain -->
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+
+<!-- Open Graph: WhatsApp, Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Snake Arena">
+<meta property="og:title" content="Snake Arena - Free Online Snake Game">
+<meta property="og:description" content="Play. Grow. Survive. Experience Snake Arena with Wall Challenge, smooth animations and exciting sounds. Developed by Shivam Sharma.">
+<meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<meta property="og:image" content="https://YOUR-DOMAIN.com/snake-arena-preview.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Snake Arena gaming website">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Snake Arena - Free Online Snake Game">
+<meta name="twitter:description" content="Play the ultimate Snake Arena Wall Challenge. Developed by Shivam Sharma.">
+<meta name="twitter:image" content="https://YOUR-DOMAIN.com/snake-arena-preview.jpg">
+
+<link rel="icon" href="favicon.png" type="image/png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Snake Arena",
+  "alternateName": "Snake Arena by Shivam Sharma",
+  "url": "https://YOUR-DOMAIN.com/",
+  "description": "Free online snake game with Wall Challenge mode.",
+  "author": {
+    "@type": "Person",
+    "name": "Shivam Sharma"
+  }
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+ --bg:#080d16;
+ --panel:#111c2c;
+ --green:#39ed9b;
+ --cyan:#38d9ff;
+ --text:#f2f7ff;
+ --muted:#8d9cb3;
+ --red:#ff5474;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+ background:radial-gradient(ellipse at 50% 0%,#193c39,transparent 55%),var(--bg);
+ min-height:100vh;color:var(--text);
+ font-family:Inter,Arial,sans-serif;
+ display:flex;justify-content:center;
+ padding:18px 12px;
+}
+.app{width:100%;max-width:460px}
+header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.brand{display:flex;gap:10px;align-items:center}
+.logo{
+ width:44px;height:44px;border-radius:14px;
+ display:grid;place-items:center;font-size:25px;
+ background:linear-gradient(145deg,#39ed9b,#087b65);
+ box-shadow:0 0 20px #39ed9b40;
+}
+.brand h1{font-family:Orbitron;font-size:17px;letter-spacing:1px}
+.brand small{color:var(--muted);font-size:10px}
+.status{
+ background:#122d2a;border:1px solid #286b55;
+ padding:8px 12px;border-radius:30px;
+ color:var(--green);font-size:10px;
+}
+.hero{text-align:center;margin:15px 0 20px}
+.hero h2{
+ font-family:Orbitron;font-size:27px;letter-spacing:2px;
+ background:linear-gradient(90deg,#fff,#39ed9b);
+ background-clip:text;color:transparent;
+}
+.hero p{color:var(--muted);font-size:12px;margin-top:7px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:14px}
+.stat{
+ background:linear-gradient(145deg,#17283c,#101a2a);
+ border:1px solid #263b52;border-radius:15px;padding:13px 5px;text-align:center;
+}
+.stat label{font-size:10px;color:var(--muted);letter-spacing:1px}
+.stat strong{display:block;margin-top:6px;font-family:Orbitron;font-size:20px;color:var(--green)}
+.game-frame{
+ padding:9px;border-radius:20px;
+ background:linear-gradient(145deg,#243a4b,#0d1928);
+ border:1px solid #375064;box-shadow:0 15px 40px #0008;
+}
+canvas{width:100%;display:block;border-radius:13px;background:#071a1b;touch-action:none}
+#message{min-height:38px;display:flex;justify-content:center;align-items:center;color:#b9d3d2;font-size:12px;text-align:center;padding:8px}
+.actions{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:9px;margin-top:10px}
+button,select{
+ border:1px solid #30475c;border-radius:12px;padding:13px 8px;
+ background:#182a3e;color:white;font-weight:700;font-size:12px;cursor:pointer;
+}
+button:active{transform:scale(.96)}
+.primary{
+ background:linear-gradient(135deg,#43efa3,#12b879);
+ color:#062319;border:0;box-shadow:0 5px 16px #20d98c30;
+}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
+.settings label{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}
+.settings select{width:100%;outline:none}
+.control-title{text-align:center;color:var(--muted);font-size:10px;letter-spacing:2px;margin:20px 0 10px}
+.controls{display:grid;grid-template-columns:repeat(3,65px);justify-content:center;gap:8px}
+.controls button{height:53px;font-size:23px;padding:5px;background:linear-gradient(145deg,#243c50,#14263a)}
+.controls button:active{background:#1e936b}
+.empty{visibility:hidden}
+.skin-section{
+ margin-top:20px;background:var(--panel);
+ border:1px solid #26384e;border-radius:15px;padding:14px;
+}
+.skin-section h3{font-size:13px;margin-bottom:12px}
+.skins{display:flex;gap:9px;flex-wrap:wrap}
+.skin{flex:1;min-width:65px;padding:9px 4px;border-radius:10px;background:#1b2b40;border:1px solid #344a60;font-size:11px}
+.skin.active{border-color:var(--green);color:var(--green)}
+.footer{text-align:center;margin-top:23px;color:#65768b;font-size:10px;line-height:1.8}
+.footer strong{color:var(--green)}
+.overlay{
+ position:fixed;inset:0;background:#030910d9;
+ backdrop-filter:blur(8px);display:flex;align-items:center;
+ justify-content:center;padding:20px;z-index:10;
+}
+.modal{
+ width:100%;max-width:350px;padding:28px 20px;
+ background:linear-gradient(145deg,#192a3d,#0d1727);
+ border:1px solid #38556a;border-radius:22px;
+ text-align:center;box-shadow:0 20px 70px #000a;
+ animation:pop .35s ease;
+}
+.modal h2{font-family:Orbitron;color:var(--green);font-size:24px;margin-bottom:12px}
+.modal p{color:#a7b9cc;font-size:13px;line-height:1.7;margin-bottom:20px}
+.modal button{width:100%;margin-top:8px}
+.hidden{display:none!important}
+@keyframes pop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+@media(max-width:370px){.hero h2{font-size:23px}.controls{grid-template-columns:repeat(3,57px)}.controls button{height:48px}}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header>
+ <div class="brand">
+  <div class="logo">🐍</div>
+  <div>
+   <h1>SNAKE ARENA</h1>
+   <small>BY SHIVAM SHARMA</small>
+  </div>
+ </div>
+ <div class="status">● ARCADE EDITION</div>
+</header>
+
+<div class="hero">
+ <h2>ENTER THE ARENA</h2>
+ <p>Play. Grow. Survive. Beat your record.</p>
+</div>
+
+<div class="stats">
+ <div class="stat"><label>SCORE</label><strong id="score">0</strong></div>
+ <div class="stat"><label>BEST SCORE</label><strong id="best">0</strong></div>
+ <div class="stat"><label>LEVEL</label><strong id="level">1</strong></div>
+</div>
+
+<div class="game-frame">
+ <canvas id="board" width="420" height="420"></canvas>
+ <div id="message">Press PLAY to start your adventure.</div>
+</div>
+
+<div class="actions">
+ <button class="primary" onclick="startGame()">▶ PLAY GAME</button>
+ <button onclick="pauseGame()" id="pauseBtn">Ⅱ PAUSE</button>
+ <button onclick="toggleSound()" id="soundBtn">🔊 SOUND</button>
+</div>
+
+<div class="settings">
+ <div>
+  <label>DIFFICULTY</label>
+  <select id="difficulty">
+   <option value="easy">Easy</option>
+   <option value="medium" selected>Medium</option>
+   <option value="hard">Hard</option>
+   <option value="pro">Pro</option>
+  </select>
+ </div>
+ <div>
+  <label>GAME MODE</label>
+  <select id="mode">
+   <option value="classic">Classic Mode</option>
+   <option value="walls" selected>Wall Challenge</option>
+  </select>
+ </div>
+</div>
+
+<div class="control-title">TOUCH CONTROLS</div>
+<div class="controls">
+ <span class="empty"></span>
+ <button onclick="turn('UP')">⬆</button>
+ <span class="empty"></span>
+ <button onclick="turn('LEFT')">⬅</button>
+ <button onclick="turn('DOWN')">⬇</button>
+ <button onclick="turn('RIGHT')">➡</button>
+</div>
+
+<div class="skin-section">
+ <h3>🎨 CHOOSE YOUR SNAKE</h3>
+ <div class="skins">
+  <button class="skin active" onclick="selectSkin(0,this)">🟢 Neon</button>
+  <button class="skin" onclick="selectSkin(1,this)">🔵 Ocean</button>
+  <button class="skin" onclick="selectSkin(2,this)">🟣 Galaxy</button>
+  <button class="skin" onclick="selectSkin(3,this)">🟡 Gold</button>
+ </div>
+</div>
+
+<div class="footer">
+ SNAKE ARENA v3.0<br>
+ Designed & Developed by <strong>Shivam Sharma</strong><br>
+ © 2026 All Rights Reserved
+</div>
+</div>
+
+<div class="overlay" id="overlay">
+ <div class="modal">
+  <h2 id="modalTitle">SNAKE ARENA</h2>
+  <p id="modalText">Welcome to the arena! Eat apples, grow your snake and create a new high score.</p>
+  <button class="primary" onclick="startGame()">START PLAYING</button>
+  <button onclick="closeModal()">CLOSE</button>
+ </div>
+</div>
+
+<script>
+const canvas=document.getElementById("board");
+const ctx=canvas.getContext("2d");
+const N=21,C=20,S=420;
+
+let snake=[],food={},bonus=null;
+let dir="RIGHT",nextDir="RIGHT";
+let score=0,level=1;
+let best=Number(localStorage.getItem("arenaBest"))||0;
+let running=false,paused=false,over=false;
+let skin=0,sound=true;
+let raf=0,last=0,acc=0;
+let particles=[],floatTexts=[];
+let foodCount=0,audio=null;
+let lastHead=null;
+
+const palettes=[
+ ["#b8ffce","#23c77b","#08784c"],
+ ["#c4f1ff","#34c5ff","#1266b7"],
+ ["#e6c8ff","#a75aff","#5625a8"],
+ ["#fff0aa","#ffc32d","#a66a05"]
+];
+
+document.getElementById("best").textContent=best;
+
+function modal(title,message){
+ document.getElementById("modalTitle").textContent=title;
+ document.getElementById("modalText").textContent=message;
+ document.getElementById("overlay").classList.remove("hidden");
+}
+
+function closeModal(){
+ document.getElementById("overlay").classList.add("hidden");
+}
+
+function initAudio(){
+ if(!audio)audio=new(window.AudioContext||window.webkitAudioContext)();
+ if(audio.state==="suspended")audio.resume();
+}
+
+function tone(f,d=.12,type="sine",vol=.045){
+ if(!sound)return;
+ initAudio();
+ let o=audio.createOscillator(),g=audio.createGain();
+ o.type=type;o.frequency.setValueAtTime(f,audio.currentTime);
+ g.gain.setValueAtTime(vol,audio.currentTime);
+ g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+d);
+ o.connect(g);g.connect(audio.destination);
+ o.start();o.stop(audio.currentTime+d);
+}
+
+function toggleSound(){
+ sound=!sound;
+ document.getElementById("soundBtn").textContent=sound?"🔊 SOUND":"🔇 MUTED";
+ if(sound)tone(650);
+}
+
+function selectSkin(n,el){
+ skin=n;
+ document.querySelectorAll(".skin").forEach(x=>x.classList.remove("active"));
+ el.classList.add("active");
+ tone(550,.1);draw(0);
+}
+
+function speed(){
+ const difficulty=document.getElementById("difficulty").value;
+ const base={easy:195,medium:145,hard:105,pro:75}[difficulty];
+ return Math.max(48,base-(level-1)*8);
+}
+
+function startGame(){
+ initAudio();cancelAnimationFrame(raf);
+ snake=[
+ {x:10,y:10},{x:9,y:10},
+ {x:8,y:10},{x:7,y:10}
+ ];
+ dir=nextDir="RIGHT";
+ score=0;level=1;foodCount=0;
+ particles=[];floatTexts=[];bonus=null;
+ running=true;paused=false;over=false;
+ acc=0;last=0;
+ updateStats();makeFood();
+ document.getElementById("message").textContent="Good luck! 🍎";
+ document.getElementById("pauseBtn").textContent="Ⅱ PAUSE";
+ closeModal();tone(520,.2);
+ raf=requestAnimationFrame(loop);
+}
+
+function updateStats(){
+ document.getElementById("score").textContent=score;
+ document.getElementById("best").textContent=best;
+ document.getElementById("level").textContent=level;
+}
+
+function makeFood(){
+ do{
+ food={x:Math.floor(Math.random()*N),y:Math.floor(Math.random()*N)};
+ }while(snake.some(p=>p.x===food.x&&p.y===food.y)||
+ (bonus&&bonus.x===food.x&&bonus.y===food.y));
+}
+
+function turn(d){
+ if(!running||paused)return;
+ if((d==="UP"&&dir!=="DOWN")||
+ (d==="DOWN"&&dir!=="UP")||
+ (d==="LEFT"&&dir!=="RIGHT")||
+ (d==="RIGHT"&&dir!=="LEFT"))nextDir=d;
+}
+
+document.addEventListener("keydown",e=>{
+ const map={
+ ArrowUp:"UP",ArrowDown:"DOWN",
+ ArrowLeft:"LEFT",ArrowRight:"RIGHT",
+ w:"UP",s:"DOWN",a:"LEFT",d:"RIGHT"
+ };
+ if(map[e.key]){e.preventDefault();turn(map[e.key]);}
+ if(e.code==="Space"){e.preventDefault();pauseGame();}
+});
+
+let tx=0,ty=0;
+canvas.addEventListener("touchstart",e=>{
+ tx=e.changedTouches[0].clientX;
+ ty=e.changedTouches[0].clientY;
+},{passive:true});
+
+canvas.addEventListener("touchend",e=>{
+ let dx=e.changedTouches[0].clientX-tx;
+ let dy=e.changedTouches[0].clientY-ty;
+ if(Math.max(Math.abs(dx),Math.abs(dy))<20)return;
+ if(Math.abs(dx)>Math.abs(dy))turn(dx>0?"RIGHT":"LEFT");
+ else turn(dy>0?"DOWN":"UP");
+},{passive:true});
+
+function pauseGame(){
+ if(!running)return;
+ paused=!paused;
+ document.getElementById("pauseBtn").textContent=paused?"▶ RESUME":"Ⅱ PAUSE";
+ document.getElementById("message").textContent=paused?"Game paused":"Keep going!";
+ if(!paused){last=0;raf=requestAnimationFrame(loop);}
+ else cancelAnimationFrame(raf);
+ tone(paused?300:600);
+}
+
+function update(){
+ dir=nextDir;
+ let h={...snake[0]};
+ if(dir==="UP")h.y--;
+ if(dir==="DOWN")h.y++;
+ if(dir==="LEFT")h.x--;
+ if(dir==="RIGHT")h.x++;
+
+ const eating=h.x===food.x&&h.y===food.y;
+ const bonusEat=bonus&&h.x===bonus.x&&h.y===bonus.y;
+
+ // Wall Challenge is the default: touching a wall ends the game.
+ if(document.getElementById("mode").value==="classic"){
+ h.x=(h.x+N)%N;h.y=(h.y+N)%N;
+ }else if(h.x<0||h.y<0||h.x>=N||h.y>=N){
+ endGame();return;
+ }
+
+ let body=(eating||bonusEat)?snake:snake.slice(0,-1);
+ if(body.some(p=>p.x===h.x&&p.y===h.y)){endGame();return;}
+
+ snake.unshift(h);
+
+ if(eating||bonusEat){
+ let points=bonusEat?50:10;
+ score+=points;foodCount++;
+ tone(bonusEat?1050:780,.12);
+ burst(h.x*C+10,h.y*C+10,bonusEat?"#ffd66b":"#67ffb1");
+ floatTexts.push({x:h.x*C+10,y:h.y*C,life:1,text:"+"+points});
+ if(bonusEat)bonus=null;
+ else makeFood();
+
+ level=1+Math.floor(score/100);
+ if(score>best){
+ best=score;
+ localStorage.setItem("arenaBest",best);
+ }
+ updateStats();
+
+ if(foodCount%5===0&&!bonus){
+ do{
+ bonus={x:Math.floor(Math.random()*N),y:Math.floor(Math.random()*N)};
+ }while(snake.some(p=>p.x===bonus.x&&p.y===bonus.y)||
+ (bonus.x===food.x&&bonus.y===food.y));
+ }
+ }else snake.pop();
+}
+
+function burst(x,y,color){
+ for(let i=0;i<18;i++){
+ let a=Math.random()*Math.PI*2,v=1+Math.random()*3;
+ particles.push({x,y,vx:Math.cos(a)*v,vy:Math.sin(a)*v,life:1,color,size:2+Math.random()*3});
+ }
+}
+
+function endGame(){
+ running=false;over=true;
+ tone(180,.5,"sawtooth",.09);
+ document.getElementById("message").textContent="GAME OVER — Score: "+score;
+ modal("GAME OVER",`Your score: ${score}. Best score: ${best}. Try again and beat your record!`);
+}
+
+function drawBackground(){
+ let g=ctx.createLinearGradient(0,0,S,S);
+ g.addColorStop(0,"#102c2a");g.addColorStop(1,"#061414");
+ ctx.fillStyle=g;ctx.fillRect(0,0,S,S);
+ ctx.strokeStyle="#a3ffd008";ctx.lineWidth=1;
+ for(let i=0;i<=N;i++){
+ ctx.beginPath();ctx.moveTo(i*C,0);ctx.lineTo(i*C,S);ctx.stroke();
+ ctx.beginPath();ctx.moveTo(0,i*C);ctx.lineTo(S,i*C);ctx.stroke();
+ }
+}
+
+function apple(x,y,t,bonusApple=false){
+ ctx.save();ctx.translate(x*C+10,y*C+10);
+ let pulse=1+Math.sin(t/130)*.08;
+ ctx.scale(pulse,pulse);
+ ctx.shadowColor=bonusApple?"#ffd34d":"#ff4e5f";
+ ctx.shadowBlur=20;
+ let g=ctx.createRadialGradient(-4,-5,1,0,0,12);
+ g.addColorStop(0,"#fff1ce");
+ g.addColorStop(.4,bonusApple?"#ffdb69":"#ff6b77");
+ g.addColorStop(1,bonusApple?"#bb710a":"#b90035");
+ ctx.fillStyle=g;
+ ctx.beginPath();ctx.arc(-4,1,7,0,Math.PI*2);ctx.arc(4,1,7,0,Math.PI*2);ctx.fill();
+ ctx.shadowBlur=0;ctx.strokeStyle="#80613b";ctx.lineWidth=2;
+ ctx.beginPath();ctx.moveTo(0,-6);ctx.lineTo(2,-12);ctx.stroke();
+ ctx.fillStyle="#54e99b";ctx.beginPath();ctx.ellipse(5,-10,5,2.5,-.5,0,Math.PI*2);ctx.fill();
+ ctx.restore();
+}
+
+function rounded(x,y,w,h,r){
+ ctx.beginPath();ctx.roundRect(x,y,w,h,r);
+}
+
+function drawSnake(t){
+ const colors=palettes[skin];
+ snake.forEach((p,i)=>{
+ let x=p.x*C,y=p.y*C;
+ let grad=ctx.createLinearGradient(x,y,x+C,y+C);
+ grad.addColorStop(0,colors[0]);
+ grad.addColorStop(.55,colors[1]);
+ grad.addColorStop(1,colors[2]);
+ ctx.save();ctx.shadowColor=colors[1];ctx.shadowBlur=i===0?15:6;
+ ctx.fillStyle=grad;rounded(x+1,y+1,C-2,C-2,7);ctx.fill();ctx.restore();
+ if(i===0){
+ ctx.fillStyle="#071b18";
+ let eyes;
+ if(dir==="RIGHT")eyes=[[14,6],[14,14]];
+ else if(dir==="LEFT")eyes=[[6,6],[6,14]];
+ else if(dir==="UP")eyes=[[6,6],[14,6]];
+ else eyes=[[6,14],[14,14]];
+ eyes.forEach(e=>{ctx.beginPath();ctx.arc(x+e[0],y+e[1],2.1,0,Math.PI*2);ctx.fill();});
+ }
+ });
+}
+
+function drawEffects(dt){
+ particles.forEach(p=>{
+ p.x+=p.vx;p.y+=p.vy;p.vx*=.96;p.vy*=.96;p.life-=dt/600;
+ ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle=p.color;
+ ctx.beginPath();ctx.arc(p.x,p.y,p.size,0,Math.PI*2);ctx.fill();
+ });
+ ctx.globalAlpha=1;particles=particles.filter(p=>p.life>0);
+
+ floatTexts.forEach(p=>{
+ p.y-=dt*.025;p.life-=dt/800;
+ ctx.globalAlpha=Math.max(0,p.life);ctx.fillStyle="#fff";
+ ctx.font="bold 15px Inter";ctx.textAlign="center";ctx.fillText(p.text,p.x,p.y);
+ });
+ ctx.globalAlpha=1;floatTexts=floatTexts.filter(p=>p.life>0);
+}
+
+function draw(t,dt=0){
+ ctx.clearRect(0,0,S,S);
+ drawBackground();
+ apple(food.x,food.y,t);
+ if(bonus)apple(bonus.x,bonus.y,t,true);
+ drawSnake(t);
+ drawEffects(dt);
+}
+
+function loop(t){
+ if(!running||paused)return;
+ if(!last)last=t;
+ let dt=Math.min(t-last,100);
+ last=t;acc+=dt;
+ while(acc>=speed()&&running){
+ update();acc-=speed();
+ }
+ draw(t,dt);
+ if(running)raf=requestAnimationFrame(loop);
+}
+
+draw(0);
+</script>
+</body>
+</html>
